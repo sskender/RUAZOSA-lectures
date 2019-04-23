@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lectures</string>
+    <string name="load_course_button">Load Courses</string>
+    <string name="load_person_button">Load Persons</string>
+    <string name="course_name">Course Name:</string>
+    <string name="course_teacher">Teacher:</string>
+    <string name="course_description">Description:</string>
+    <string name="list_students_button">List Students</string>
+</resources>

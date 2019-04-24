@@ -9,6 +9,7 @@ import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
 import hr.fer.tel.ruazosa.lectures.net.RestFactory
+import kotlinx.android.synthetic.main.activity_course_details.*
 
 class CourseDetailsActivity : AppCompatActivity() {
 
@@ -17,7 +18,6 @@ class CourseDetailsActivity : AppCompatActivity() {
     private var courseDescription: TextView? = null
     private var teacher: TextView? = null
     private var courseStudentsButton: Button? = null
-
     private var personsListView: ListView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +33,27 @@ class CourseDetailsActivity : AppCompatActivity() {
         val shortCourse = intent.getSerializableExtra("course") as ShortCourse
 
         LoadShortCourseTask().execute(shortCourse)
+
+        enrollStudentButton?.setOnClickListener {
+            // this is a cool filter
+            val studentIDSList =
+                studentIdToEnrollEditText
+                    .text
+                    .toString()
+                    .split(",")
+                    .map { s ->
+                        s.toLongOrNull()
+                    }
+                    .filter { s ->
+                        s != null
+                    }
+
+            EnrollStudentTask().execute(Pair(shortCourse, studentIDSList) as Pair<ShortCourse, List<Long>>?)
+            // refresh list after student was removed
+            LoadPersonTask().execute(shortCourse)
+
+            studentIdToEnrollEditText.setText("")
+        }
 
         personsListView?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val itemAtPosition = parent.getItemAtPosition(position)
@@ -89,7 +110,7 @@ class CourseDetailsActivity : AppCompatActivity() {
     private inner class DisenrollStudentTask: AsyncTask<Pair<ShortCourse, ShortPerson>, Void, Boolean>() {
         override fun onPostExecute(result: Boolean?) {
             super.onPostExecute(result)
-            Toast.makeText(this@CourseDetailsActivity, "Student unenrolled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@CourseDetailsActivity, "Student unrolled", Toast.LENGTH_SHORT).show()
         }
 
         override fun doInBackground(vararg params: Pair<ShortCourse, ShortPerson>): Boolean? {
@@ -97,6 +118,22 @@ class CourseDetailsActivity : AppCompatActivity() {
             return rest.disenrollPersonFromCourse(personId = params[0].second.id, courseId = params[0].first.id)
         }
     }
+
+    private inner class EnrollStudentTask : AsyncTask<Pair<ShortCourse, List<Long>>, Void, Boolean>() {
+        override fun doInBackground(vararg params: Pair<ShortCourse, List<Long>>): Boolean? {
+            val rest = RestFactory.instance
+            for (studentId: Long in params[0].second) {
+                rest.enrollPersonToCourse(studentId, params[0].first.id)
+            }
+            return true
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            super.onPostExecute(result)
+            Toast.makeText(this@CourseDetailsActivity, "Students enrolled", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private inner class PersonAdapter(context: Context, textViewResourceId: Int, private val shortPersonList: List<ShortPerson>): ArrayAdapter<ShortPerson>(context, textViewResourceId, shortPersonList)
 

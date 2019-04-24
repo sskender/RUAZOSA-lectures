@@ -46,6 +46,17 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
             android:id="@+id/courseTeacher" />
+    <EditText
+            android:id="@+id/studentIdToEnrollEditText"
+            android:hint="Insert student IDs to enroll to course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="" android:singleLine="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enroll_students_button"
+            android:id="@+id/enrollStudentButton"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

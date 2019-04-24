@@ -6,4 +6,5 @@
     <string name="course_teacher">Teacher:</string>
     <string name="course_description">Description:</string>
     <string name="list_students_button">List Students</string>
+    <string name="enroll_students_button">Enroll Students</string>
 </resources>

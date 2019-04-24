@@ -51,5 +51,8 @@
             android:layout_height="wrap_content"
             android:text="@string/list_students_button"
             android:id="@+id/courseStudentsButton"/>
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/peopleListView"/>
 
 </LinearLayout>

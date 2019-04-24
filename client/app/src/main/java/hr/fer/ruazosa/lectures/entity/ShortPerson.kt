@@ -11,4 +11,9 @@ data class ShortPerson(
             p.id,
             p.firstName + " " + p.lastName
     )
+
+    override fun toString(): String {
+        return name
+    }
+
 }

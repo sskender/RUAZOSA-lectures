@@ -4,14 +4,11 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
 import hr.fer.tel.ruazosa.lectures.net.RestFactory
-import kotlinx.android.synthetic.main.activity_course_details.*
 
 class CourseDetailsActivity : AppCompatActivity() {
 
@@ -21,6 +18,8 @@ class CourseDetailsActivity : AppCompatActivity() {
     private var teacher: TextView? = null
     private var courseStudentsButton: Button? = null
 
+    private var personsListView: ListView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_details)
@@ -29,10 +28,20 @@ class CourseDetailsActivity : AppCompatActivity() {
         courseDescription = findViewById(R.id.courseDescription) as TextView
         teacher = findViewById(R.id.courseTeacher) as TextView
         courseStudentsButton = findViewById(R.id.courseStudentsButton) as Button
+        personsListView = findViewById(R.id.personsListView)
 
         val shortCourse = intent.getSerializableExtra("course") as ShortCourse
 
         LoadShortCourseTask().execute(shortCourse)
+
+        personsListView?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val itemAtPosition = parent.getItemAtPosition(position)
+            val shortPerson = itemAtPosition as ShortPerson
+
+            DisenrollStudentTask().execute(Pair(shortCourse, shortPerson))
+            // refresh list after student was removed
+            LoadPersonTask().execute(shortCourse)
+        }
 
         courseStudentsButton?.setOnClickListener {
             LoadPersonTask().execute(shortCourse)
@@ -71,9 +80,21 @@ class CourseDetailsActivity : AppCompatActivity() {
     private fun updatePersonList(person: List<ShortPerson>?) {
         if (person != null) {
             val adapter = PersonAdapter(this, android.R.layout.simple_list_item_1, person)
-            peopleListView?.adapter = adapter
+            personsListView?.adapter = adapter
         } else {
             // TODO show that people can not be loaded
+        }
+    }
+
+    private inner class DisenrollStudentTask: AsyncTask<Pair<ShortCourse, ShortPerson>, Void, Boolean>() {
+        override fun onPostExecute(result: Boolean?) {
+            super.onPostExecute(result)
+            Toast.makeText(this@CourseDetailsActivity, "Student unenrolled", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun doInBackground(vararg params: Pair<ShortCourse, ShortPerson>): Boolean? {
+            val rest = RestFactory.instance
+            return rest.disenrollPersonFromCourse(personId = params[0].second.id, courseId = params[0].first.id)
         }
     }
 

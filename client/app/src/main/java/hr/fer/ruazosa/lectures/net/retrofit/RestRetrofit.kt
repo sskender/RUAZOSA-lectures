@@ -1,9 +1,5 @@
 package hr.fer.tel.ruazosa.lectures.net.retrofit
 
-import android.util.Log
-
-import java.io.IOException
-
 import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.Person
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
@@ -45,10 +41,10 @@ class RestRetrofit : RestInterface {
     }
 
     override fun enrollPersonToCourse(personId: Long?, courseId: Long?): Boolean? {
-        throw UnsupportedOperationException()
+        return service.enrollPersonToCourse(courseId, personId)
     }
 
     override fun disenrollPersonFromCourse(personId: Long?, courseId: Long?): Boolean? {
-        throw UnsupportedOperationException()
+        return service.disenrollPersonFromCourse(personId, courseId)
     }
 }

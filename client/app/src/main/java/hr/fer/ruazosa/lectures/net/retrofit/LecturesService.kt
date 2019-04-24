@@ -5,6 +5,7 @@ import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
 import retrofit.http.GET
+import retrofit.http.POST
 import retrofit.http.Path
 
 interface LecturesService {
@@ -16,4 +17,10 @@ interface LecturesService {
 
     @GET("/courses/{id}/students")
     fun getCourseStudents(@Path("id") courseId: Long?): List<ShortPerson>
+
+    @POST("/courses/{cid}/enrollPerson/{pid}")
+    fun enrollPersonToCourse(@Path("cid") courseId: Long?, @Path("pid") PersonId: Long?): Boolean?
+
+    @POST("/courses/{cid}/unenrollPerson/{pid}")
+    fun disenrollPersonFromCourse(@Path("pid") personId: Long?, @Path("cid") courseId: Long?): Boolean?
 }

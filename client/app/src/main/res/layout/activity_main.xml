@@ -20,5 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/loadCourseButton"
     ></ListView>
+    <Button
+            android:text="LOAD PERSONS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/loadPersonsbutton"
+            android:layout_marginEnd="3dp" android:layout_alignEnd="@+id/listView"/>
 
 </RelativeLayout>

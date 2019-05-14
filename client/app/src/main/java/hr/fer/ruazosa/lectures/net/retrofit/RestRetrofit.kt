@@ -33,11 +33,11 @@ class RestRetrofit : RestInterface {
     }
 
     override fun getListOfPersons(): List<ShortPerson>? {
-        throw UnsupportedOperationException()
+        return service.listOfPersons
     }
 
     override fun getPerson(id: Long?): Person? {
-        throw UnsupportedOperationException()
+        return service.getPerson(id)
     }
 
     override fun enrollPersonToCourse(personId: Long?, courseId: Long?): Boolean? {

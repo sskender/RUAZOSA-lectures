@@ -20,6 +20,7 @@ class CourseDetailsActivity : AppCompatActivity() {
     private var courseStudentsButton: Button? = null
     private var personsListView: ListView? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_details)
@@ -34,6 +35,8 @@ class CourseDetailsActivity : AppCompatActivity() {
 
         LoadShortCourseTask().execute(shortCourse)
 
+
+        // enroll students from list
         enrollStudentButton?.setOnClickListener {
             // this is a cool filter
             val studentIDSList =
@@ -55,6 +58,8 @@ class CourseDetailsActivity : AppCompatActivity() {
             studentIdToEnrollEditText.setText("")
         }
 
+
+        // unroll student on tap
         personsListView?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val itemAtPosition = parent.getItemAtPosition(position)
             val shortPerson = itemAtPosition as ShortPerson
@@ -64,11 +69,17 @@ class CourseDetailsActivity : AppCompatActivity() {
             LoadPersonTask().execute(shortCourse)
         }
 
+
+        // load students in this course
         courseStudentsButton?.setOnClickListener {
             LoadPersonTask().execute(shortCourse)
         }
+
     }
 
+
+
+    // load courses task
     private inner class LoadShortCourseTask: AsyncTask<ShortCourse, Void, Course?>() {
 
         override fun doInBackground(vararg sCourse: ShortCourse): Course? {
@@ -83,10 +94,14 @@ class CourseDetailsActivity : AppCompatActivity() {
 
             this@CourseDetailsActivity.teacher?.text = course?.teacher?.name
         }
+
     }
 
 
+
+    // load persons task
     private inner class LoadPersonTask: AsyncTask<ShortCourse, Void, List<ShortPerson>?>() {
+
         override fun doInBackground(vararg sCourse: ShortCourse): List<ShortPerson>? {
             val rest = RestFactory.instance
 
@@ -96,45 +111,62 @@ class CourseDetailsActivity : AppCompatActivity() {
         override fun onPostExecute(result: List<ShortPerson>?) {
             updatePersonList(result)
         }
+
+        private fun updatePersonList(person: List<ShortPerson>?) {
+            if (person != null) {
+                val adapter = PersonAdapter(this@CourseDetailsActivity, android.R.layout.simple_list_item_1, person)
+                personsListView?.adapter = adapter
+            } else {
+                // TODO show that people can not be loaded
+            }
+        }
+
     }
 
-    private fun updatePersonList(person: List<ShortPerson>?) {
-        if (person != null) {
-            val adapter = PersonAdapter(this, android.R.layout.simple_list_item_1, person)
-            personsListView?.adapter = adapter
-        } else {
-            // TODO show that people can not be loaded
-        }
-    }
+
+
+    // enroll and unroll
 
     private inner class DisenrollStudentTask: AsyncTask<Pair<ShortCourse, ShortPerson>, Void, Boolean>() {
+
         override fun onPostExecute(result: Boolean?) {
             super.onPostExecute(result)
+
             Toast.makeText(this@CourseDetailsActivity, "Student unrolled", Toast.LENGTH_SHORT).show()
         }
 
         override fun doInBackground(vararg params: Pair<ShortCourse, ShortPerson>): Boolean? {
             val rest = RestFactory.instance
+
             return rest.disenrollPersonFromCourse(personId = params[0].second.id, courseId = params[0].first.id)
         }
+
     }
 
+
     private inner class EnrollStudentTask : AsyncTask<Pair<ShortCourse, List<Long>>, Void, Boolean>() {
+
         override fun doInBackground(vararg params: Pair<ShortCourse, List<Long>>): Boolean? {
             val rest = RestFactory.instance
+
             for (studentId: Long in params[0].second) {
                 rest.enrollPersonToCourse(studentId, params[0].first.id)
             }
+
             return true
         }
 
         override fun onPostExecute(result: Boolean?) {
             super.onPostExecute(result)
+
             Toast.makeText(this@CourseDetailsActivity, "Students enrolled", Toast.LENGTH_SHORT).show()
         }
+
     }
 
 
+
+    // adapter
     private inner class PersonAdapter(context: Context, textViewResourceId: Int, private val shortPersonList: List<ShortPerson>): ArrayAdapter<ShortPerson>(context, textViewResourceId, shortPersonList)
 
 }

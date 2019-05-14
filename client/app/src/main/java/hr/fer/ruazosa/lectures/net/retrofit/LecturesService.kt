@@ -2,13 +2,17 @@ package hr.fer.tel.ruazosa.lectures.net.retrofit
 
 
 import hr.fer.tel.ruazosa.lectures.entity.Course
+import hr.fer.tel.ruazosa.lectures.entity.Person
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
 import retrofit.http.GET
 import retrofit.http.POST
 import retrofit.http.Path
+import java.lang.Void as Void1
+import kotlin.Unit as Unit1
 
 interface LecturesService {
+    // courses
     @get:GET("/courses")
     val listOfCourses: List<ShortCourse>
 
@@ -18,6 +22,14 @@ interface LecturesService {
     @GET("/courses/{id}/students")
     fun getCourseStudents(@Path("id") courseId: Long?): List<ShortPerson>
 
+    // persons
+    @get:GET("/persons")
+    val listOfPersons: List<ShortPerson>
+
+    @GET("/persons/{id}")
+    fun getPerson(@Path("id") id: Long?): Person
+
+    // enroll and unroll
     @POST("/courses/{cid}/enrollPerson/{pid}")
     fun enrollPersonToCourse(@Path("cid") courseId: Long?, @Path("pid") PersonId: Long?): Boolean?
 

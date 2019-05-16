@@ -5,6 +5,7 @@ import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.Person
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
+import retrofit.http.DELETE
 import retrofit.http.GET
 import retrofit.http.POST
 import retrofit.http.Path
@@ -28,6 +29,9 @@ interface LecturesService {
 
     @GET("/persons/{id}")
     fun getPerson(@Path("id") id: Long?): Person
+
+    @DELETE("/persons/{id}")
+    fun deletePerson(@Path("id") id: Long?): Boolean?
 
     // enroll and unroll
     @POST("/courses/{cid}/enrollPerson/{pid}")

@@ -103,4 +103,9 @@ class InMemoryRestImplementation : RestInterface {
         }
         return true
     }
+
+    override fun deletePerson(id: Long?): Boolean? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

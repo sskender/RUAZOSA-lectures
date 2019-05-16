@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
+import android.widget.*
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
 import hr.fer.tel.ruazosa.lectures.net.RestFactory
@@ -129,11 +126,18 @@ class MainActivity : AppCompatActivity() {
     private inner class DeletePersonTask : AsyncTask<ShortPerson, Void, Boolean?>() {
 
         override fun doInBackground(vararg params: ShortPerson?): Boolean? {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            val rest = RestFactory.instance
+
+            return rest.deletePerson(params[0]?.id)
         }
 
         override fun onPostExecute(result: Boolean?) {
             super.onPostExecute(result)
+
+            // refresh list after element deletion
+            LoadPersonsTask().execute()
+
+            Toast.makeText(this@MainActivity, "Person deleted", Toast.LENGTH_SHORT).show()
         }
 
     }

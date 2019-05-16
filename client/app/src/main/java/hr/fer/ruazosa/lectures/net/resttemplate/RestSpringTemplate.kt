@@ -1,18 +1,15 @@
 package hr.fer.tel.ruazosa.lectures.net.resttemplate
 
 import android.util.Log
-
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.web.client.RestTemplate
-
-import java.util.LinkedList
-
 import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.Person
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
 import hr.fer.tel.ruazosa.lectures.net.RestFactory
 import hr.fer.tel.ruazosa.lectures.net.RestInterface
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
+import java.util.*
 
 class RestSpringTemplate : RestInterface {
     private val baseURL: String = "http://" + RestFactory.BASE_IP + ":8080/api"
@@ -72,4 +69,9 @@ class RestSpringTemplate : RestInterface {
     override fun disenrollPersonFromCourse(personId: Long?, courseId: Long?): Boolean? {
         throw UnsupportedOperationException()
     }
+
+    override fun deletePerson(id: Long?): Boolean? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

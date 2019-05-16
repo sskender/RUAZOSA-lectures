@@ -1,11 +1,15 @@
 package hr.fer.tel.ruazosa.lectures.net.urlconnection
 
 import android.util.Log
-
+import hr.fer.tel.ruazosa.lectures.entity.Course
+import hr.fer.tel.ruazosa.lectures.entity.Person
+import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
+import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
+import hr.fer.tel.ruazosa.lectures.net.RestFactory
+import hr.fer.tel.ruazosa.lectures.net.RestInterface
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
@@ -14,14 +18,7 @@ import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.ProtocolException
 import java.net.URL
-import java.util.LinkedList
-
-import hr.fer.tel.ruazosa.lectures.entity.Course
-import hr.fer.tel.ruazosa.lectures.entity.Person
-import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
-import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
-import hr.fer.tel.ruazosa.lectures.net.RestFactory
-import hr.fer.tel.ruazosa.lectures.net.RestInterface
+import java.util.*
 
 class RestUrlConnection : RestInterface {
     private val baseURL: String = "http://" + RestFactory.BASE_IP + ":8080/api"
@@ -157,4 +154,9 @@ private fun parseShortCourse(jsonShortCourse: JSONObject): ShortCourse {
 
         return sb.toString()
     }
+
+    override fun deletePerson(id: Long?): Boolean? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

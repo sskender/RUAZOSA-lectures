@@ -36,7 +36,7 @@ class CourseDetailsActivity : AppCompatActivity() {
         LoadShortCourseTask().execute(shortCourse)
 
 
-        // enroll students from list
+        // enroll multiple students from list (separated with comma)
         enrollStudentButton?.setOnClickListener {
             // this is a cool filter
             val studentIDSList =
@@ -52,8 +52,6 @@ class CourseDetailsActivity : AppCompatActivity() {
                     }
 
             EnrollStudentTask().execute(Pair(shortCourse, studentIDSList) as Pair<ShortCourse, List<Long>>?)
-            // refresh list after student was removed
-            LoadPersonTask().execute(shortCourse)
 
             studentIdToEnrollEditText.setText("")
         }
@@ -65,8 +63,6 @@ class CourseDetailsActivity : AppCompatActivity() {
             val shortPerson = itemAtPosition as ShortPerson
 
             DisenrollStudentTask().execute(Pair(shortCourse, shortPerson))
-            // refresh list after student was removed
-            LoadPersonTask().execute(shortCourse)
         }
 
 

@@ -44,6 +44,10 @@ class RestRetrofit : RestInterface {
         return service.deletePerson(id)
     }
 
+    override fun postPerson(person: Person?): Boolean? {
+        return service.postPerson(person)
+    }
+
     override fun enrollPersonToCourse(personId: Long?, courseId: Long?): Boolean? {
         return service.enrollPersonToCourse(courseId, personId)
     }

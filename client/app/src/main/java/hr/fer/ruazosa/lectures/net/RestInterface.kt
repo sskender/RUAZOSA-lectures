@@ -11,8 +11,10 @@ interface RestInterface {
 
     fun getCourse(id: Long?): Course?
     fun getCourseStudents(courseId: Long?): List<ShortPerson>?
+
     fun getPerson(id: Long?): Person?
     fun deletePerson(id: Long?): Boolean?
+    fun postPerson(person: Person?): Boolean?
 
     fun enrollPersonToCourse(personId: Long?, courseId: Long?): Boolean?
     fun disenrollPersonFromCourse(personId: Long?, courseId: Long?): Boolean?

@@ -11,8 +11,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CourseDetailsActivity"
-            android:label="CourseDetailsActivity">
+        <activity android:name=".CreatePersonActivity">
+        </activity>
+        <activity
+                android:name=".CourseDetailsActivity"
+                android:label="CourseDetailsActivity">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

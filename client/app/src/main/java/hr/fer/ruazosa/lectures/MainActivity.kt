@@ -63,6 +63,14 @@ class MainActivity : AppCompatActivity() {
             nowIsLoadCoursesButtonClicked = false
             LoadPersonsTask().execute()
         }
+
+
+        // create new person activity
+        addPersonFloatingActionButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, CreatePersonActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

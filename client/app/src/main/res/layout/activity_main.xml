@@ -18,12 +18,24 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/loadCourseButton"
-    ></ListView>
+            android:layout_below="@id/loadCourseButton"/>
+
     <Button
             android:text="LOAD PERSONS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/loadPersonsbutton"
             android:layout_marginEnd="3dp" android:layout_alignEnd="@+id/listView"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:id="@+id/addPersonFloatingActionButton"
+            android:layout_alignTop="@+id/listView"
+            android:layout_marginTop="475dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignEnd="@+id/loadPersonsbutton"
+            android:focusable="true"/>
 
 </RelativeLayout>

@@ -5,10 +5,7 @@ import hr.fer.tel.ruazosa.lectures.entity.Course
 import hr.fer.tel.ruazosa.lectures.entity.Person
 import hr.fer.tel.ruazosa.lectures.entity.ShortCourse
 import hr.fer.tel.ruazosa.lectures.entity.ShortPerson
-import retrofit.http.DELETE
-import retrofit.http.GET
-import retrofit.http.POST
-import retrofit.http.Path
+import retrofit.http.*
 import java.lang.Void as Void1
 import kotlin.Unit as Unit1
 
@@ -32,6 +29,9 @@ interface LecturesService {
 
     @DELETE("/persons/{id}")
     fun deletePerson(@Path("id") id: Long?): Boolean?
+
+    @POST("/persons")
+    fun postPerson(@Body person: Person?): Boolean?
 
     // enroll and unroll
     @POST("/courses/{cid}/enrollPerson/{pid}")
